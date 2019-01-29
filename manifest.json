@@ -1,0 +1,22 @@
+{
+  "content_scripts": [
+    {
+      "matches": [
+        "https://news.naver.com/*"
+      ],
+      "js": [
+        "main.js"
+      ]
+    }
+  ],
+  "description": "지금 보고 있는 기사를 작성한 기자의 다른 기사 목록",
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "manifest_version": 2,
+  "name": "이 기자의 다른 기사",
+  "permissions": [
+    "https://search.naver.com/*"
+  ],
+  "version": "0.0.1"
+}
