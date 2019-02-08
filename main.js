@@ -85,9 +85,9 @@ function generateList (text, data) {
   document.querySelector('table.container td.aside div.aside').insertBefore(div, document.querySelector('.section:first-child'))
 }
 
-function htmlEncode(value) {
-  let _ = document.createElement('div')
-  _.innerText=value
+function sanitizeHTML (value) {
+  const _ = document.createElement('div')
+  _.innerText = value
   return _.innerHTML
 }
 
@@ -108,7 +108,7 @@ function parseList (text) {
     const url = $title.getAttribute('href')
 
     return {
-      title: htmlEncode($title.textContent),
+      title: sanitizeHTML($title.textContent),
       url
     }
   })
