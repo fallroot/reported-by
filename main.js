@@ -85,6 +85,12 @@ function generateList (text, data) {
   document.querySelector('table.container td.aside div.aside').insertBefore(div, document.querySelector('.section:first-child'))
 }
 
+function sanitizeHTML (value) {
+  const _ = document.createElement('div')
+  _.innerText = value
+  return _.innerHTML
+}
+
 function parseList (text) {
   const LIST_RE = /<ul class="type01">(.*?)<\/ul>/gi
   const matches = LIST_RE.exec(text)
@@ -102,7 +108,7 @@ function parseList (text) {
     const url = $title.getAttribute('href')
 
     return {
-      title: $title.textContent,
+      title: sanitizeHTML($title.textContent),
       url
     }
   })
