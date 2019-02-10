@@ -38,7 +38,7 @@ function fetchArticles (data) {
 function generateList (text, data) {
   const list = parseList(text)
 
-  if (!list.length) {
+  if (!list || !list.length) {
     return
   }
 
@@ -73,11 +73,11 @@ function parseList (text) {
   $ul.innerHTML = matches[0]
 
   return Array.from($ul.querySelectorAll('li')).map(li => {
-    const $title = li.querySelector('._sp_each_title')
-    const url = $title.getAttribute('href')
+    const title = li.querySelector('._sp_each_title').textContent
+    const url = li.querySelector('a._sp_each_url').getAttribute('href')
 
     return {
-      title: sanitizeHTML($title.textContent),
+      title: sanitizeHTML(title),
       url
     }
   })

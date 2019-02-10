@@ -93,11 +93,11 @@ function parseList (text) {
   const doc = parser.parseFromString(text, 'text/html')
 
   return Array.from(doc.querySelectorAll('#clusterResultUL li')).map(li => {
-    const el = li.querySelector('.f_link_b')
-    const url = el.getAttribute('href')
+    const title = li.querySelector('.f_link_b').textContent
+    const url = li.querySelector('a.f_nb').getAttribute('href')
 
     return {
-      title: sanitizeHTML(el.textContent),
+      title: sanitizeHTML(title),
       url
     }
   })
