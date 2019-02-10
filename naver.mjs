@@ -1,4 +1,6 @@
-function init () {
+import { parseEmails, sanitizeHTML } from './util.mjs'
+
+function run () {
   const content = getTextContent()
 
   if (!content) {
@@ -22,33 +24,6 @@ function getTextContent () {
   }
 }
 
-function parseEmails (text) {
-  const EMAIL_RE = /\b[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}/gi
-  const result = []
-  let match
-
-  while ((match = EMAIL_RE.exec(text))) {
-    const email = match[0]
-    const bunch = text.substring(Math.max(0, match.index - 20), Math.min(match.index + email.length + 20, text.length - 1))
-
-    result.push({
-      email,
-      name: parseName(bunch)
-    })
-  }
-
-  return result
-}
-
-function parseName (text) {
-  const REPORTER_RE = /(?<=[^가-힣])([가-힣]+)\s*(기자|특파원)/g
-  const matches = REPORTER_RE.exec(text)
-
-  if (matches) {
-    return `${matches[1]} ${matches[2]}`
-  }
-}
-
 function fetchArticles (data) {
   const url = `https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(data.email)}&sort=1`
 
@@ -63,7 +38,7 @@ function fetchArticles (data) {
 function generateList (text, data) {
   const list = parseList(text)
 
-  if (!list.length) {
+  if (!list || !list.length) {
     return
   }
 
@@ -85,12 +60,6 @@ function generateList (text, data) {
   document.querySelector('table.container td.aside div.aside').insertBefore(div, document.querySelector('.section:first-child'))
 }
 
-function sanitizeHTML (value) {
-  const _ = document.createElement('div')
-  _.innerText = value
-  return _.innerHTML
-}
-
 function parseList (text) {
   const LIST_RE = /<ul class="type01">(.*?)<\/ul>/gi
   const matches = LIST_RE.exec(text)
@@ -104,14 +73,16 @@ function parseList (text) {
   $ul.innerHTML = matches[0]
 
   return Array.from($ul.querySelectorAll('li')).map(li => {
-    const $title = li.querySelector('._sp_each_title')
-    const url = $title.getAttribute('href')
+    const title = li.querySelector('._sp_each_title').textContent
+    const url = li.querySelector('a._sp_each_url').getAttribute('href')
 
     return {
-      title: sanitizeHTML($title.textContent),
+      title: sanitizeHTML(title),
       url
     }
   })
 }
 
-init()
+export {
+  run
+}

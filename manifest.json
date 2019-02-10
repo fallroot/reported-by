@@ -2,10 +2,11 @@
   "content_scripts": [
     {
       "matches": [
+        "https://*.v.daum.net/*",
         "https://news.naver.com/*"
       ],
       "js": [
-        "main.js"
+        "loader.js"
       ]
     }
   ],
@@ -16,7 +17,13 @@
   "manifest_version": 2,
   "name": "이 기자의 다른 기사",
   "permissions": [
+    "https://search.daum.net/*",
     "https://search.naver.com/*"
   ],
-  "version": "0.0.2"
+  "version": "0.0.2",
+  "web_accessible_resources": [
+    "daum.mjs",
+    "naver.mjs",
+    "util.mjs"
+  ]
 }
