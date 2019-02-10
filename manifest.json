@@ -20,7 +20,7 @@
     "https://search.daum.net/*",
     "https://search.naver.com/*"
   ],
-  "version": "0.0.2",
+  "version": "0.1.0",
   "web_accessible_resources": [
     "daum.mjs",
     "naver.mjs",

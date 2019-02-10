@@ -14,6 +14,7 @@
 
 <p align="center"><img src="screenshot/naver.png" alt="네이버 뉴스 지원"></p>
 
+- 다음 뉴스 (v0.1.0)
 - 네이버 뉴스 (v0.0.1)
 
 ## 아이콘
