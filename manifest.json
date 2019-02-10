@@ -5,7 +5,7 @@
         "https://news.naver.com/*"
       ],
       "js": [
-        "main.js"
+        "loader.js"
       ]
     }
   ],
@@ -18,5 +18,9 @@
   "permissions": [
     "https://search.naver.com/*"
   ],
-  "version": "0.0.2"
+  "version": "0.0.2",
+  "web_accessible_resources": [
+    "naver.mjs",
+    "util.mjs"
+  ]
 }
